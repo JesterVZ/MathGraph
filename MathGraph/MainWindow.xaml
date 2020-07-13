@@ -350,8 +350,11 @@
             <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_2">
                 <materialDesign:PackIcon Kind="Close" Foreground="White" Width="28" Height="28"/>
             </Button>
+            <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0, 0, 30, 0">
+                <materialDesign:PackIcon Kind="Settings" Foreground="White" Width="28" Height="28"/>
+            </Button>
         </Grid>
-        <Grid x:Name="MenuGrid" Background="#FF00B9FF" HorizontalAlignment="Left" Width="32">
+        <Grid x:Name="MenuGrid" Background="#FF00B9FF" HorizontalAlignment="Left" Width="200">
             <StackPanel>
                 <Grid Background="White" Height="100">
                     <ToggleButton HorizontalAlignment="Right" Name="MenuButton" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Margin="0, 0, 2, 0">
@@ -377,6 +380,7 @@
                             </EventTrigger>
                         </ToggleButton.Triggers>
                     </ToggleButton>
+
                 </Grid>
                 <ListView BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                     <ListViewItem Height="30">
