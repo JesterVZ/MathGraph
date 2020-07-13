@@ -14,6 +14,7 @@ namespace MathGraph
     public partial class MainWindow : Window
     {
         EquationSolver equationSolver;
+        SettingsWindow settingsWindow;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,7 +31,9 @@ namespace MathGraph
 
           private void Window_Loaded(object sender, RoutedEventArgs e)
           {
-              equationSolver = new EquationSolver();
+            settingsWindow = new SettingsWindow();
+            equationSolver = new EquationSolver();
+            DrawPoints(); //Можно ли рисовать точки
           }
 
           private void Button_Click(object sender, RoutedEventArgs e)
@@ -122,6 +125,22 @@ namespace MathGraph
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            settingsWindow.Show();
+        }
+        private void DrawPoints()
+        {
+            if (settingsWindow.CanDrawPoints == true)
+            {
+                DrawPointsListViewItem.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                DrawPointsListViewItem.Visibility = Visibility.Hidden;
+            }
         }
     }
 }

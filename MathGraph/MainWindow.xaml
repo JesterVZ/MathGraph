@@ -350,7 +350,7 @@
             <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_2">
                 <materialDesign:PackIcon Kind="Close" Foreground="White" Width="28" Height="28"/>
             </Button>
-            <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0, 0, 30, 0">
+            <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0, 0, 30, 0" Click="Button_Click_3">
                 <materialDesign:PackIcon Kind="Settings" Foreground="White" Width="28" Height="28"/>
             </Button>
         </Grid>
@@ -416,7 +416,7 @@
                             <Button Style="{DynamicResource RoundButtonStyle}" Content="Clear" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="#FF00B9FF" VerticalAlignment="Top" Margin="15, 0, 0, 0" Width="120" Click="Button_Click_1"/>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="30">
+                    <ListViewItem Name="DrawPointsListViewItem" Height="30">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ChartTimelineVariant" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
                             <CheckBox Style="{DynamicResource DrawCheckBoxStyle}" Grid.Column="0" Content="Draw points" Name="DrawPointsCheckBox" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" Margin="15, 0, 0, 0" VerticalAlignment="Top"/>
