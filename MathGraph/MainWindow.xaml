@@ -5,10 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MathGraph" xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewmodel ="clr-namespace:MathGraph.ViewModel"
+        xmlns:view ="clr-namespace:MathGraph.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         WindowStyle="None" ResizeMode="NoResize" 
-        Loaded="Window_Loaded"
+        
     xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2">
     <Window.Resources>
         <Style x:Key="FocusVisual">
@@ -335,16 +337,20 @@
                 </Trigger>
             </ControlTemplate.Triggers>
         </ControlTemplate>
+        <DataTemplate x:Name="graphViewTemplate" DataType="{x:Type viewmodel:GraphViewModel}">
+            <view:GraphView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
-        <lvc:CartesianChart Name="SeriesChart" Grid.Column="1" >
+        <ContentControl Content="{Binding}"/>
+        <!--<lvc:CartesianChart Name="SeriesChart" Grid.Column="1" >
             <lvc:CartesianChart.AxisY>
                 <lvc:Axis Title="Y"></lvc:Axis>
             </lvc:CartesianChart.AxisY>
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis Title="X"></lvc:Axis>
             </lvc:CartesianChart.AxisX>
-        </lvc:CartesianChart>
+        </lvc:CartesianChart>-->
         <Grid VerticalAlignment="Top" Height="30" Background="#FF00B9FF" MouseDown="Grid_MouseDown">
             <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Graph Editor" FontSize="16" FontWeight="Bold" Foreground="White"/>
             <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Click="Button_Click_2">
@@ -353,82 +359,9 @@
             <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0, 0, 30, 0" Click="Button_Click_3">
                 <materialDesign:PackIcon Kind="Settings" Foreground="White" Width="28" Height="28"/>
             </Button>
-        </Grid>
-        <Grid x:Name="MenuGrid" Background="#FF00B9FF" HorizontalAlignment="Left" Width="200">
-            <StackPanel>
-                <Grid Background="White" Height="100">
-                    <ToggleButton HorizontalAlignment="Right" Name="MenuButton" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" Margin="0, 0, 2, 0">
-                        <materialDesign:PackIcon Kind="Menu" Width="25" Height="25" Foreground="#FF00B9FF" VerticalAlignment="Center"/>
-                        <ToggleButton.Triggers>
-                            <EventTrigger RoutedEvent="ToggleButton.Unchecked">
-                                <BeginStoryboard>
-                                    <Storyboard x:Name="HideStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="MenuGrid" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="200" To="32" Duration="0:0:0.2">
-
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                            <EventTrigger RoutedEvent="ToggleButton.Checked">
-                                <BeginStoryboard>
-                                    <Storyboard x:Name="ShowStackPanel">
-                                        <DoubleAnimation Storyboard.TargetName="MenuGrid" Storyboard.TargetProperty="Width" BeginTime="0:0:0" From="32" To="200" Duration="0:0:0.2">
-
-                                        </DoubleAnimation>
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </EventTrigger>
-                        </ToggleButton.Triggers>
-                    </ToggleButton>
-
-                </Grid>
-                <ListView BorderBrush="Transparent" Background="Transparent" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Sigma" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
-                            <ComboBox Template="{DynamicResource RoundComboBoxTemplate}" Name="GraphTypeCombobox" Grid.Column="0" Margin="15, 0, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" Height="22" SelectionChanged="GraphTypeCombobox_SelectionChanged">
-                                <TextBlock>Y = X^2</TextBlock>
-                                <TextBlock>Y = X^n</TextBlock>
-                                <TextBlock>Y = X^3</TextBlock>
-                                <TextBlock>Y = SIN(X)</TextBlock>
-                                <TextBlock>Y = COS(X)</TextBlock>
-                                <TextBlock>Y = SQRT(X)</TextBlock>
-                            </ComboBox>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="DebugStepOver" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
-                            <Slider Grid.Column="0" Name="StepSlider" Margin="15, 0, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" ValueChanged="StepSlider_ValueChanged"/>
-                            <TextBlock Grid.Column="0" Name="StepLabelValue" TextAlignment="Center" Foreground="White" Text="Step:" TextWrapping="Wrap" VerticalAlignment="Top" Width="37"/>
-
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ChartAreaspline" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
-                            <Button Style="{DynamicResource RoundButtonStyle}" Content="Draw" FontWeight="Bold" FontSize="14" Foreground="#FF00B9FF" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="15, 0, 0, 0" Width="120" Click="Button_Click"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Cached" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
-                            <Button Style="{DynamicResource RoundButtonStyle}" Content="Clear" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14" Foreground="#FF00B9FF" VerticalAlignment="Top" Margin="15, 0, 0, 0" Width="120" Click="Button_Click_1"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Name="DrawPointsListViewItem" Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ChartTimelineVariant" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
-                            <CheckBox Style="{DynamicResource DrawCheckBoxStyle}" Grid.Column="0" Content="Draw points" Name="DrawPointsCheckBox" FontSize="14" FontWeight="Bold" Foreground="White" HorizontalAlignment="Left" Margin="15, 0, 0, 0" VerticalAlignment="Top"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Height="30">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBox Grid.Column="0" Name="PowerTextBox" IsEnabled="False" HorizontalAlignment="Center" Margin="34, 0, 0, 0" Text="" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-            </StackPanel>
+            <Button HorizontalAlignment="Right" Width="30" Background="{x:Null}" BorderBrush="{x:Null}" Margin="0, 0, 67, 0" Click="Button_Click_4">
+                <materialDesign:PackIcon Kind="ChartAreaspline" Foreground="White" Width="28" Height="28"/>
+            </Button>
         </Grid>
     </Grid>
 </Window>
