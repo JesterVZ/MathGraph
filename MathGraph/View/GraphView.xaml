@@ -57,7 +57,7 @@
                             </ComboBox>
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Height="30">
+                    <ListViewItem Height="30" Name="StepSliderListItem">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="DebugStepOver" Width="20" Height="20" Foreground="White" VerticalAlignment="Center"/>
                             <Slider Grid.Column="0" Name="StepSlider" Margin="15, 0, 0, 0" HorizontalAlignment="Center" VerticalAlignment="Top" Width="120" ValueChanged="StepSlider_ValueChanged"/>

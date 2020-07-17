@@ -4,8 +4,11 @@ using System.Text;
 
 namespace MathGraph.Data
 {
-    class SettingsController
+    public class SettingsController
     {
-        public bool CanDrawPoints = false;
+        public string[] SettingsFileArray = {
+            System.IO.Path.Combine(Environment.CurrentDirectory, "CanDrawPoints.txt"),
+            System.IO.Path.Combine(Environment.CurrentDirectory, "CanChangeStep.txt")
+        };
     }
 }

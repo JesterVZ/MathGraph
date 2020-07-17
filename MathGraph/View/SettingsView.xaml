@@ -15,7 +15,7 @@
             </ListViewItem>
             <ListViewItem Height="30">
                 <StackPanel Orientation="Horizontal">
-                    <CheckBox Name="CanResizeMode">Resize window</CheckBox>
+                    <CheckBox Name="CanResizeMode">Change step</CheckBox>
                 </StackPanel>
             </ListViewItem>
             <ListViewItem Height="30" HorizontalAlignment="Center">

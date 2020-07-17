@@ -17,9 +17,23 @@ namespace MathGraph
     {
         public MainWindow()
         {
-
+            string path = System.IO.Path.Combine(Environment.CurrentDirectory, "CanResizeMode.txt");
             InitializeComponent();
+            try
+            {
+                using (StreamReader sr = new StreamReader(path))
+                {
+                    string outputValue = sr.ReadToEnd();
+                    if(outputValue == "true")
+                    {
+                        //изменение resizemode 
+                    }
+                }
+            }
+            catch
+            {
 
+            }
         }
 
         private void Grid_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)

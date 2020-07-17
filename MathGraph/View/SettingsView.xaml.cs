@@ -21,10 +21,6 @@ namespace MathGraph.View
     /// </summary>
     public partial class SettingsView : UserControl
     {
-        string [] SettingsFileArray = {
-            System.IO.Path.Combine(Environment.CurrentDirectory, "CanDrawPoints.txt"),
-            System.IO.Path.Combine(Environment.CurrentDirectory, "CanResizeMode.txt")
-        };
         public SettingsView()
         {
             InitializeComponent();
@@ -32,22 +28,23 @@ namespace MathGraph.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            SettingsController settingsController = new SettingsController();
             if(CanDrawPointsCheckBox.IsChecked == true)
             {
-                string path = SettingsFileArray[0];
+                string path = settingsController.SettingsFileArray[0];
                 WriteFile(path, true);
             } else
             {
-                string path = SettingsFileArray[0];
+                string path = settingsController.SettingsFileArray[0];
                 WriteFile(path, false);
             }
             if(CanResizeMode.IsChecked == true)
             {
-                string path = SettingsFileArray[1];
+                string path = settingsController.SettingsFileArray[1];
                 WriteFile(path, true);
             } else
             {
-                string path = SettingsFileArray[1];
+                string path = settingsController.SettingsFileArray[1];
                 WriteFile(path, false);
             }
         }

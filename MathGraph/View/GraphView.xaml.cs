@@ -27,38 +27,7 @@ namespace MathGraph.View
         {
             equationSolver = new EquationSolver();
             InitializeComponent();
-
-            string[] SettingsFileArray = {
-                System.IO.Path.Combine(Environment.CurrentDirectory, "CanDrawPoints.txt"),
-                System.IO.Path.Combine(Environment.CurrentDirectory, "CanResizeMode.txt")
-             };
-            try
-            {
-                for (int i = 0; i < SettingsFileArray.Length; i++)
-                {
-                    string path = SettingsFileArray[i];
-                    using (StreamReader sr = new StreamReader(path))
-                    {
-                        string outputValue = sr.ReadToEnd();
-                        if (i == 0)
-                        {
-                            if (outputValue == "true")
-                            {
-                                DrawPointsListViewItem.Visibility = Visibility.Visible;
-                            }
-                            if (outputValue == "false")
-                            {
-                                DrawPointsListViewItem.Visibility = Visibility.Hidden;
-                            }
-                        }
-                    }
-                }
-            }
-            catch
-            {
-
-            }
-
+            CheckSettintsState();
         }
 
         private void GraphTypeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -75,22 +44,37 @@ namespace MathGraph.View
 
         private void StepSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            StepLabelValue.Text = (Math.Round(StepSlider.Value) / 10).ToString();
+            if(StepSliderListItem.Visibility == Visibility.Visible)
+            {
+                StepLabelValue.Text = (Math.Round(StepSlider.Value) / 10).ToString();
+            } else
+            {
+                StepLabelValue.Text = "";
+            }
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             ChartValues<double> chartV = new ChartValues<double>();
-            if (StepSlider.Value != 0)
+            if (StepSliderListItem.Visibility == Visibility.Visible)
             {
-                equationSolver.SetStep(Math.Round(StepSlider.Value) / 10);
-            }
-            else
+                if (StepSlider.Value != 0)
+                {
+                    equationSolver.SetStep(Math.Round(StepSlider.Value) / 10);
+                }
+                else
+                {
+                    MessageBox.Show("Укажите шаг");
+                    return;
+                }
+
+            } else
             {
-                MessageBox.Show("Укажите шаг");
-                return;
+                equationSolver.SetStep(0.1);
             }
+
+
             switch (GraphTypeCombobox.SelectedIndex)
             {
                 case -1:
@@ -149,6 +133,47 @@ namespace MathGraph.View
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             SeriesChart.Series.Clear();
+        }
+        private void CheckSettintsState()
+        {
+            SettingsController settingsController = new SettingsController();
+            try
+            {
+                for (int i = 0; i < settingsController.SettingsFileArray.Length; i++)
+                {
+                    string path = settingsController.SettingsFileArray[i];
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        string outputValue = sr.ReadToEnd();
+                        if (i == 0)
+                        {
+                            if (outputValue == "true")
+                            {
+                                DrawPointsListViewItem.Visibility = Visibility.Visible;
+                            }
+                            if (outputValue == "false")
+                            {
+                                DrawPointsListViewItem.Visibility = Visibility.Hidden;
+                            }
+                        }
+                        if (i == 1)
+                        {
+                            if (outputValue == "true")
+                            {
+                                StepSliderListItem.Visibility = Visibility.Visible;
+                            }
+                            if (outputValue == "false")
+                            {
+                                StepSliderListItem.Visibility = Visibility.Hidden;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
         }
     }
 }
