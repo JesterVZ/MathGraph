@@ -3,6 +3,7 @@ using LiveCharts.Wpf;
 using MathGraph.Data;
 using MathGraph.ViewModel;
 using System;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -14,10 +15,9 @@ namespace MathGraph
     /// </summary>
     public partial class MainWindow : Window
     {
-        EquationSolver equationSolver;
         public MainWindow()
         {
-            //DrawPoints(false, false); //Можно ли рисовать точки
+
             InitializeComponent();
 
         }
@@ -37,7 +37,7 @@ namespace MathGraph
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            DataContext = new SettingsViewModel();
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)

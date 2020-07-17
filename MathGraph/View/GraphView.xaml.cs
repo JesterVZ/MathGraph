@@ -3,6 +3,7 @@ using LiveCharts.Wpf;
 using MathGraph.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -26,6 +27,38 @@ namespace MathGraph.View
         {
             equationSolver = new EquationSolver();
             InitializeComponent();
+
+            string[] SettingsFileArray = {
+                System.IO.Path.Combine(Environment.CurrentDirectory, "CanDrawPoints.txt"),
+                System.IO.Path.Combine(Environment.CurrentDirectory, "CanResizeMode.txt")
+             };
+            try
+            {
+                for (int i = 0; i < SettingsFileArray.Length; i++)
+                {
+                    string path = SettingsFileArray[i];
+                    using (StreamReader sr = new StreamReader(path))
+                    {
+                        string outputValue = sr.ReadToEnd();
+                        if (i == 0)
+                        {
+                            if (outputValue == "true")
+                            {
+                                DrawPointsListViewItem.Visibility = Visibility.Visible;
+                            }
+                            if (outputValue == "false")
+                            {
+                                DrawPointsListViewItem.Visibility = Visibility.Hidden;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
         }
 
         private void GraphTypeCombobox_SelectionChanged(object sender, SelectionChangedEventArgs e)

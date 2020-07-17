@@ -6,7 +6,21 @@
              xmlns:local="clr-namespace:MathGraph.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+    <Grid Background="White">
+        <ListView Margin="0, 30, 0, 0">
+            <ListViewItem Height="30">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Name="CanDrawPointsCheckBox">Draw points on chart</CheckBox>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem Height="30">
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Name="CanResizeMode">Resize window</CheckBox>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem Height="30" HorizontalAlignment="Center">
+                <Button Click="Button_Click">Apply</Button>
+            </ListViewItem>
+        </ListView>
     </Grid>
 </UserControl>
